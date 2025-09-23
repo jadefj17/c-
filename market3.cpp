@@ -12,7 +12,7 @@ typedef struct {
 
 Product products[MAX_PRODUCTS];
 int productCount = 0;  
-int soldProducts[MAX_PRODUCTS]; 
+int soldProducts[MAX_PRODUCTS];  
 
 void addProduct() {
     if (productCount >= MAX_PRODUCTS) {
@@ -47,8 +47,8 @@ void sellProduct() {
     for (int i = 0; i < productCount; i++) {
         if (products[i].id == id) {
             if (products[i].quantity >= quantity) {
-                products[i].quantity -= quantity;  
-                soldProducts[i] += quantity;      
+                products[i].quantity -= quantity; 
+                soldProducts[i] += quantity;     
                 printf("상품 '%s'가 %d개 판매되었습니다.\n", products[i].name, quantity);
                 return;
             }
@@ -59,6 +59,25 @@ void sellProduct() {
         }
     }
     printf("해당 ID의 상품을 찾을 수 없습니다.\n");
+}
+
+void searchByProductName() {
+    char searchName[50];
+    printf("검색할 상품명: ");
+    scanf("%s", searchName);
+
+    int found = 0;
+    for (int i = 0; i < productCount; i++) {
+        if (strcmp(products[i].name, searchName) == 0) {
+            printf("상품 ID: %d, 상품명: %s, 가격: %.2f, 재고: %d, 판매된 수량: %d\n",
+                products[i].id, products[i].name, products[i].price, products[i].quantity, soldProducts[i]);
+            found = 1;
+            break;
+        }
+    }
+    if (!found) {
+        printf("상품명을 찾을 수 없습니다.\n");
+    }
 }
 
 void viewProductStatus() {
@@ -81,7 +100,7 @@ void menu() {
         printf("1. 상품 추가\n");
         printf("2. 상품 판매\n");
         printf("3. 상품 현황\n");
-        printf("4. 상품명 입력\n");
+        printf("4. 상품명 입력 (검색)\n");
         printf("5. 종료\n");
         printf("선택: ");
         scanf("%d", &choice);
@@ -97,7 +116,7 @@ void menu() {
             viewProductStatus();
             break;
         case 4:
-            printf("상품명 입력 기능은 아직 구현되지 않았습니다.\n");
+            searchByProductName();  
             break;
         case 5:
             printf("시스템을 종료합니다.\n");
@@ -109,7 +128,6 @@ void menu() {
 }
 
 int main() {
-    menu(); 
+    menu();  
     return 0;
 }
-

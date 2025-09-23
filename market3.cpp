@@ -3,7 +3,6 @@
 
 #define MAX_PRODUCTS 100
 
-// 상품 구조체 정의
 typedef struct {
     int id;
     char name[50];
@@ -12,10 +11,9 @@ typedef struct {
 } Product;
 
 Product products[MAX_PRODUCTS];
-int productCount = 0;  // 상품 개수
-int soldProducts[MAX_PRODUCTS];  // 판매된 상품 수량
+int productCount = 0;  
+int soldProducts[MAX_PRODUCTS];  
 
-// 상품 추가
 void addProduct() {
     if (productCount >= MAX_PRODUCTS) {
         printf("상품을 더 이상 추가할 수 없습니다.\n");
@@ -50,8 +48,8 @@ void sellProduct() {
     for (int i = 0; i < productCount; i++) {
         if (products[i].id == id) {
             if (products[i].quantity >= quantity) {
-                products[i].quantity -= quantity;  // 재고 차감
-                soldProducts[i] += quantity;      // 판매량 기록
+                products[i].quantity -= quantity;  
+                soldProducts[i] += quantity;      
                 printf("상품 '%s'가 %d개 판매되었습니다.\n", products[i].name, quantity);
                 return;
             }
@@ -64,7 +62,6 @@ void sellProduct() {
     printf("해당 ID의 상품을 찾을 수 없습니다.\n");
 }
 
-// 상품명으로 검색하여 상품 정보 출력
 void searchByProductName() {
     char searchName[50];
     printf("검색할 상품명: ");
@@ -122,7 +119,7 @@ void menu() {
             viewProductStatus();
             break;
         case 4:
-            searchByProductName();  // 상품명 검색 기능 호출
+            searchByProductName();  
             break;
         case 5:
             printf("시스템을 종료합니다.\n");
@@ -134,6 +131,7 @@ void menu() {
 }
 
 int main() {
-    menu();  // 메뉴 실행
+    menu(); 
     return 0;
 }
+

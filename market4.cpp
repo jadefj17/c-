@@ -5,7 +5,6 @@
 
 #define MAX_PRODUCTS 100
 
-// 상품 구조체 정의
 typedef struct {
     int id;
     char name[50];
@@ -16,7 +15,6 @@ typedef struct {
 Product products[MAX_PRODUCTS];
 int productCount = 0;
 
-// 입력 유효성 함수
 int getValidInt(const char* prompt) {
     char input[100];
     int value;
@@ -47,7 +45,6 @@ int getValidInt(const char* prompt) {
     }
 }
 
-// 상품 등록 및 입고
 void addProduct() {
     if (productCount >= MAX_PRODUCTS) {
         printf("상품 갯수 초과! 더 이상 추가할 수 없습니다.\n");
@@ -57,7 +54,6 @@ void addProduct() {
     int id = getValidInt("상품ID : ");
     int found = -1;
 
-    // 상품이 이미 있는지 확인
     for (int i = 0; i < productCount; i++) {
         if (products[i].id == id) {
             found = i;
@@ -66,13 +62,11 @@ void addProduct() {
     }
 
     if (found != -1) {
-        // 상품이 있으면 입고량만 추가
         int qty = getValidInt("입고량 : ");
         products[found].quantity += qty;
         printf("기존 상품이 업데이트되었습니다.\n");
     }
     else {
-        // 새로운 상품 등록
         Product newProduct;
         newProduct.id = id;
         printf("상품명 : ");
@@ -85,7 +79,6 @@ void addProduct() {
     }
 }
 
-// 판매
 void sellProduct() {
     int id = getValidInt("상품ID : ");
     int found = -1;
@@ -112,7 +105,6 @@ void sellProduct() {
     }
 }
 
-// 개별 현황
 void viewSingleProduct() {
     int id = getValidInt("상품ID 입력 : ");
     int found = -1;
@@ -134,7 +126,6 @@ void viewSingleProduct() {
     printf("재고: %d\n", products[found].quantity);
 }
 
-// 전체 현황
 void viewAllProducts() {
     if (productCount == 0) {
         printf("등록된 상품이 없습니다.\n");
@@ -148,7 +139,6 @@ void viewAllProducts() {
     }
 }
 
-// 메뉴
 void menu() {
     int choice;
     while (1) {
@@ -180,8 +170,8 @@ void menu() {
     }
 }
 
-// main 함수
 int main() {
     menu();
     return 0;
 }
+

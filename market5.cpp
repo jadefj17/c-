@@ -2,25 +2,25 @@
 #include <string.h>
 
 #define MAX_PRODUCTS 5
-#define FILE_NAME "»óÇ°Á¤º¸.txt"
+#define FILE_NAME "ìƒí’ˆì •ë³´.txt"
 
 typedef struct {
-    int id;             // »óÇ° ID
-    char name[50];      // »óÇ°¸í
-    int price;          // »óÇ° °¡°İ
-    int stock;          // ÀÔ°í ¼ö·®
-    int sold;           // ÆÇ¸Å ¼ö·®
-    int totalSales;     // ÃÑ ÆÇ¸Å ±İ¾×
+    int id;             // ìƒí’ˆ ID
+    char name[50];      // ìƒí’ˆëª…
+    int price;          // ìƒí’ˆ ê°€ê²©
+    int stock;          // ì…ê³  ìˆ˜ëŸ‰
+    int sold;           // íŒë§¤ ìˆ˜ëŸ‰
+    int totalSales;     // ì´ íŒë§¤ ê¸ˆì•¡
 } Product;
 
 Product products[MAX_PRODUCTS];
 int productCount = 0;
 
-// ÆÄÀÏ ÀúÀå
+// íŒŒì¼ ì €ì¥
 void saveToFile() {
     FILE* fp = fopen(FILE_NAME, "w");
     if (fp == NULL) {
-        printf("ÆÄÀÏ ÀúÀå ½ÇÆĞ!\n");
+        printf("íŒŒì¼ ì €ì¥ ì‹¤íŒ¨!\n");
         return;
     }
 
@@ -31,13 +31,13 @@ void saveToFile() {
     }
 
     fclose(fp);
-    printf("»óÇ° Á¤º¸°¡ ÆÄÀÏ¿¡ ÀúÀåµÇ¾ú½À´Ï´Ù.\n");
+    printf("ìƒí’ˆ ì •ë³´ê°€ íŒŒì¼ì— ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤.\n");
 }
 
-// ÆÄÀÏ ºÒ·¯¿À±â
+// íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
 void loadFromFile() {
     FILE* fp = fopen(FILE_NAME, "r");
-    if (fp == NULL) return; // ÆÄÀÏ ¾øÀ¸¸é ¹«½Ã
+    if (fp == NULL) return; // íŒŒì¼ ì—†ìœ¼ë©´ ë¬´ì‹œ
 
     while (fscanf(fp, "%d %s %d %d %d %d",
         &products[productCount].id,
@@ -50,10 +50,10 @@ void loadFromFile() {
     }
 
     fclose(fp);
-    printf("»óÇ° Á¤º¸¸¦ ÆÄÀÏ¿¡¼­ ºÒ·¯¿Ô½À´Ï´Ù.\n");
+    printf("ìƒí’ˆ ì •ë³´ë¥¼ íŒŒì¼ì—ì„œ ë¶ˆëŸ¬ì™”ìŠµë‹ˆë‹¤.\n");
 }
 
-// »óÇ° °Ë»ö
+// ìƒí’ˆ ê²€ìƒ‰
 int findProductByID(int id) {
     for (int i = 0; i < productCount; i++) {
         if (products[i].id == id)
@@ -62,60 +62,60 @@ int findProductByID(int id) {
     return -1;
 }
 
-// 1. ÀÔ°í ¸Ş´º
+// 1. ì…ê³  ë©”ë‰´
 void addOrUpdateProduct() {
     if (productCount >= MAX_PRODUCTS) {
-        printf("»óÇ° °³¼ö ÇÑµµ(5°³)¸¦ ÃÊ°úÇß½À´Ï´Ù!\n");
+        printf("ìƒí’ˆ ê°œìˆ˜ í•œë„(5ê°œ)ë¥¼ ì´ˆê³¼í–ˆìŠµë‹ˆë‹¤!\n");
         return;
     }
 
     int id;
-    printf("»óÇ°ID ÀÔ·Â: ");
+    printf("ìƒí’ˆID ì…ë ¥: ");
     scanf("%d", &id);
 
     int index = findProductByID(id);
     if (index != -1) {
-        printf("±âÁ¸ »óÇ°ÀÔ´Ï´Ù. ÀÔ°í ¼ö·® Ãß°¡.\n");
+        printf("ê¸°ì¡´ ìƒí’ˆì…ë‹ˆë‹¤. ì…ê³  ìˆ˜ëŸ‰ ì¶”ê°€.\n");
         int addQty;
-        printf("Ãß°¡ ÀÔ°í ¼ö·®: ");
+        printf("ì¶”ê°€ ì…ê³  ìˆ˜ëŸ‰: ");
         scanf("%d", &addQty);
         products[index].stock += addQty;
     }
     else {
         Product p;
         p.id = id;
-        printf("»óÇ°¸í ÀÔ·Â: ");
+        printf("ìƒí’ˆëª… ì…ë ¥: ");
         scanf("%s", p.name);
-        printf("»óÇ°°¡°İ ÀÔ·Â: ");
+        printf("ìƒí’ˆê°€ê²© ì…ë ¥: ");
         scanf("%d", &p.price);
-        printf("ÀÔ°í ¼ö·® ÀÔ·Â: ");
+        printf("ì…ê³  ìˆ˜ëŸ‰ ì…ë ¥: ");
         scanf("%d", &p.stock);
         p.sold = 0;
         p.totalSales = 0;
         products[productCount++] = p;
     }
 
-    printf("ÀÔ°í Ã³¸®°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
+    printf("ì…ê³  ì²˜ë¦¬ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
 }
 
-// 2. ÆÇ¸Å ¸Ş´º
+// 2. íŒë§¤ ë©”ë‰´
 void sellProduct() {
     int id;
-    printf("ÆÇ¸ÅÇÒ »óÇ°ID ÀÔ·Â: ");
+    printf("íŒë§¤í•  ìƒí’ˆID ì…ë ¥: ");
     scanf("%d", &id);
 
     int index = findProductByID(id);
     if (index == -1) {
-        printf("Á¸ÀçÇÏÁö ¾Ê´Â »óÇ°ÀÔ´Ï´Ù.\n");
+        printf("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ìƒí’ˆì…ë‹ˆë‹¤.\n");
         return;
     }
 
     int qty;
-    printf("ÆÇ¸Å ¼ö·® ÀÔ·Â: ");
+    printf("íŒë§¤ ìˆ˜ëŸ‰ ì…ë ¥: ");
     scanf("%d", &qty);
 
     if (qty > products[index].stock) {
-        printf("Àç°í°¡ ºÎÁ·ÇÕ´Ï´Ù!\n");
+        printf("ì¬ê³ ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤!\n");
         return;
     }
 
@@ -123,37 +123,37 @@ void sellProduct() {
     products[index].sold += qty;
     products[index].totalSales += qty * products[index].price;
 
-    printf("ÆÇ¸Å ¿Ï·á! ÃÑ ÆÇ¸Å ±İ¾×: %d¿ø\n", products[index].totalSales);
+    printf("íŒë§¤ ì™„ë£Œ! ì´ íŒë§¤ ê¸ˆì•¡: %dì›\n", products[index].totalSales);
 }
 
-// 3. °³º° »óÇ° Á¶È¸
+// 3. ê°œë³„ ìƒí’ˆ ì¡°íšŒ
 void viewProduct() {
     int id;
-    printf("Á¶È¸ÇÒ »óÇ°ID ÀÔ·Â: ");
+    printf("ì¡°íšŒí•  ìƒí’ˆID ì…ë ¥: ");
     scanf("%d", &id);
 
     int index = findProductByID(id);
     if (index == -1) {
-        printf("ÇØ´ç »óÇ°ÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.\n");
+        printf("í•´ë‹¹ ìƒí’ˆì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\n");
         return;
     }
 
     Product p = products[index];
-    printf("\n[»óÇ° Á¤º¸]\n");
+    printf("\n[ìƒí’ˆ ì •ë³´]\n");
     printf("ID: %d\n", p.id);
-    printf("»óÇ°¸í: %s\n", p.name);
-    printf("°¡°İ: %d\n", p.price);
-    printf("Àç°í: %d\n", p.stock);
-    printf("ÆÇ¸Å·®: %d\n", p.sold);
-    printf("ÃÑ ÆÇ¸Å±İ¾×: %d\n\n", p.totalSales);
+    printf("ìƒí’ˆëª…: %s\n", p.name);
+    printf("ê°€ê²©: %d\n", p.price);
+    printf("ì¬ê³ : %d\n", p.stock);
+    printf("íŒë§¤ëŸ‰: %d\n", p.sold);
+    printf("ì´ íŒë§¤ê¸ˆì•¡: %d\n\n", p.totalSales);
 }
 
-// 4. ÀüÃ¼ »óÇ° ÇöÈ²
+// 4. ì „ì²´ ìƒí’ˆ í˜„í™©
 void viewAllProducts() {
-    printf("\n===== ÀüÃ¼ »óÇ° ÇöÈ² =====\n");
+    printf("\n===== ì „ì²´ ìƒí’ˆ í˜„í™© =====\n");
     for (int i = 0; i < productCount; i++) {
         Product p = products[i];
-        printf("[%d] %s | °¡°İ:%d | Àç°í:%d | ÆÇ¸Å:%d | ÃÑÆÇ¸Å±İ:%d\n",
+        printf("[%d] %s | ê°€ê²©:%d | ì¬ê³ :%d | íŒë§¤:%d | ì´íŒë§¤ê¸ˆ:%d\n",
             p.id, p.name, p.price, p.stock, p.sold, p.totalSales);
     }
     printf("=========================\n");
@@ -164,9 +164,9 @@ int main() {
     loadFromFile();
 
     while (1) {
-        printf("\n[¼îÇÎ¸ô Àç°í °ü¸® ½Ã½ºÅÛ]\n");
-        printf("1. ÀÔ°í\n2. ÆÇ¸Å\n3. °³º°ÇöÈ²\n4. ÀüÃ¼ÇöÈ²\n5. Á¾·á\n");
-        printf("¸Ş´º ¼±ÅÃ: ");
+        printf("\n[ì‡¼í•‘ëª° ì¬ê³  ê´€ë¦¬ ì‹œìŠ¤í…œ]\n");
+        printf("1. ì…ê³ \n2. íŒë§¤\n3. ê°œë³„í˜„í™©\n4. ì „ì²´í˜„í™©\n5. ì¢…ë£Œ\n");
+        printf("ë©”ë‰´ ì„ íƒ: ");
         scanf("%d", &menu);
 
         switch (menu) {
@@ -176,10 +176,11 @@ int main() {
         case 4: viewAllProducts(); break;
         case 5:
             saveToFile();
-            printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n");
+            printf("í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.\n");
             return 0;
         default:
-            printf("Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù.\n");
+            printf("ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤.\n");
         }
     }
 }
+

@@ -5,18 +5,17 @@
 #define FILE_NAME "상품정보.txt"
 
 typedef struct {
-    int id;             // 상품 ID
-    char name[50];      // 상품명
-    int price;          // 상품 가격
-    int stock;          // 입고 수량
-    int sold;           // 판매 수량
-    int totalSales;     // 총 판매 금액
+    int id;            
+    char name[50];      
+    int price;         
+    int stock;          
+    int sold;           
+    int totalSales;     
 } Product;
 
 Product products[MAX_PRODUCTS];
 int productCount = 0;
 
-// 파일 저장
 void saveToFile() {
     FILE* fp = fopen(FILE_NAME, "w");
     if (fp == NULL) {
@@ -34,10 +33,9 @@ void saveToFile() {
     printf("상품 정보가 파일에 저장되었습니다.\n");
 }
 
-// 파일 불러오기
 void loadFromFile() {
     FILE* fp = fopen(FILE_NAME, "r");
-    if (fp == NULL) return; // 파일 없으면 무시
+    if (fp == NULL) return; 
 
     while (fscanf(fp, "%d %s %d %d %d %d",
         &products[productCount].id,
@@ -53,7 +51,6 @@ void loadFromFile() {
     printf("상품 정보를 파일에서 불러왔습니다.\n");
 }
 
-// 상품 검색
 int findProductByID(int id) {
     for (int i = 0; i < productCount; i++) {
         if (products[i].id == id)
@@ -98,7 +95,6 @@ void addOrUpdateProduct() {
     printf("입고 처리가 완료되었습니다.\n");
 }
 
-// 2. 판매 메뉴
 void sellProduct() {
     int id;
     printf("판매할 상품ID 입력: ");
@@ -126,7 +122,6 @@ void sellProduct() {
     printf("판매 완료! 총 판매 금액: %d원\n", products[index].totalSales);
 }
 
-// 3. 개별 상품 조회
 void viewProduct() {
     int id;
     printf("조회할 상품ID 입력: ");
@@ -148,7 +143,6 @@ void viewProduct() {
     printf("총 판매금액: %d\n\n", p.totalSales);
 }
 
-// 4. 전체 상품 현황
 void viewAllProducts() {
     printf("\n===== 전체 상품 현황 =====\n");
     for (int i = 0; i < productCount; i++) {
@@ -183,4 +177,3 @@ int main() {
         }
     }
 }
-
